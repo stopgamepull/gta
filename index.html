@@ -1,0 +1,713 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="images/Gtathreadlogo.png" type="image/png">
+    <title>GTAThread</title>
+    <style>
+        @font-face {
+            font-family: 'Pricedown';
+            src: url('pricedown.ttf') format('truetype');
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #121212;
+            color: #e0e0e0;
+            line-height: 1.4;
+            margin: 0;
+            padding: 0;
+            background-image: url('gta_bg.jpg');
+            background-attachment: fixed;
+            background-size: cover;
+        }
+        
+        header {
+            background-color: #0a0a0a;
+            padding: 10px 20px;
+            border-bottom: 2px solid #c4ba0a;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        }
+        
+        .logo {
+            color: #c4ba0a;
+            font-size: 32px;
+            text-decoration: none;
+            font-family: 'Pricedown', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        
+        .container {
+            display: flex;
+            max-width: 1200px;
+            margin: 20px auto;
+            gap: 24px;
+        }
+        
+        .main-content {
+            flex: 1;
+            background: rgba(20, 20, 20, 0.9);
+            border: 1px solid #333;
+            border-radius: 5px;
+            overflow: hidden;
+            box-shadow: 0 0 15px rgba(0,0,0,0.3);
+        }
+        
+        .sidebar {
+            width: 312px;
+        }
+        
+        .community-card {
+            background: rgba(20, 20, 20, 0.9);
+            border: 1px solid #333;
+            border-radius: 5px;
+            margin-bottom: 16px;
+            overflow: hidden;
+            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+        }
+        
+        .community-header {
+            background-color: #c4ba0a;
+            color: #fff;
+            padding: 12px;
+            font-size: 16px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .community-list {
+            padding: 12px;
+        }
+        
+        .community-list a {
+            display: block;
+            padding: 8px 0;
+            color: #e0e0e0;
+            text-decoration: none;
+            font-size: 14px;
+            border-bottom: 1px solid #333;
+            transition: color 0.2s;
+        }
+        
+        .community-list a:hover {
+            color: #c4ba0a;
+        }
+        
+        .sort-options {
+            display: flex;
+            padding: 10px;
+            background: #1a1a1a;
+            border-bottom: 1px solid #333;
+        }
+        
+        .sort-btn {
+            background: #333;
+            border: none;
+            padding: 8px 16px;
+            margin-right: 8px;
+            font-size: 12px;
+            color: #e0e0e0;
+            cursor: pointer;
+            font-weight: bold;
+            text-transform: uppercase;
+            border-radius: 3px;
+            transition: all 0.2s;
+        }
+        
+        .sort-btn.active {
+            background: #c4ba0a;
+            color: #fff;
+        }
+        
+        .sort-btn:hover {
+            background: #444;
+        }
+        
+        .post {
+            display: flex;
+            padding: 16px;
+            border-bottom: 1px solid #333;
+            transition: background 0.2s;
+        }
+        
+        .post:hover {
+            background: rgba(50, 50, 50, 0.3);
+        }
+        
+        .vote {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 0 8px;
+            color: #e0e0e0;
+            min-width: 40px;
+        }
+        
+        .vote-btn {
+            background: none;
+            border: none;
+            color: #888;
+            cursor: pointer;
+            font-size: 16px;
+            padding: 2px;
+            transition: color 0.2s;
+        }
+        
+        .vote-btn:hover {
+            color: #c4ba0a;
+        }
+        
+        .vote-count {
+            font-size: 14px;
+            margin: 4px 0;
+            font-weight: bold;
+            color: #e0e0e0;
+        }
+        
+        .post-content {
+            flex: 1;
+        }
+        
+        .post-title {
+            font-size: 20px;
+            margin-bottom: 8px;
+            color: #e0e0e0;
+            text-decoration: none;
+            display: block;
+            font-weight: bold;
+            transition: color 0.2s;
+        }
+        
+        .post-title:hover {
+            color: #c4ba0a;
+        }
+        
+        .post-meta {
+            font-size: 12px;
+            color: #888;
+            margin-bottom: 8px;
+        }
+        
+        .post-meta a {
+            color: #888;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        
+        .post-meta a:hover {
+            color: #c4ba0a;
+            text-decoration: underline;
+        }
+        
+        .post-image {
+            max-width: 100%;
+            max-height: 500px;
+            margin-top: 10px;
+            border-radius: 5px;
+            border: 1px solid #333;
+        }
+        
+        .post-text {
+            margin-top: 10px;
+            font-size: 16px;
+            color: #e0e0e0;
+            line-height: 1.4;
+        }
+        
+        .comments {
+            padding: 16px;
+        }
+        
+        .comments-title {
+            font-size: 20px;
+            margin-bottom: 16px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #333;
+            color: #e0e0e0;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+        
+        .comment-form {
+            margin-bottom: 24px;
+        }
+        
+        .comment-textarea {
+            width: 100%;
+            padding: 12px;
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 3px;
+            resize: vertical;
+            min-height: 100px;
+            font-family: inherit;
+            margin-bottom: 8px;
+            color: #e0e0e0;
+        }
+        
+        .comment-submit {
+            background: #c4ba0a;
+            color: #fff;
+            border: none;
+            padding: 8px 16px;
+            cursor: pointer;
+            font-weight: bold;
+            text-transform: uppercase;
+            border-radius: 3px;
+            transition: background 0.2s;
+        }
+        
+        .comment-submit:hover {
+            background: #cc0000;
+        }
+        
+        .comment {
+            margin: 12px 0;
+            padding-left: 16px;
+            border-left: 2px solid #c4ba0a;
+        }
+        
+        .comment-meta {
+            font-size: 12px;
+            color: #888;
+            margin-bottom: 4px;
+        }
+        
+        .comment-text {
+            margin-bottom: 8px;
+            color: #e0e0e0;
+            font-size: 16px;
+        }
+        
+        .comment-actions {
+            font-size: 12px;
+            color: #888;
+        }
+        
+        .comment-actions a {
+            color: #888;
+            text-decoration: none;
+            margin-right: 8px;
+            transition: color 0.2s;
+        }
+        
+        .comment-actions a:hover {
+            color: #c4ba0a;
+            text-decoration: underline;
+        }
+        
+        .current-community {
+            font-size: 18px;
+            padding: 16px;
+            border-bottom: 1px solid #333;
+            display: flex;
+            align-items: center;
+            color: #e0e0e0;
+            font-weight: bold;
+            text-transform: uppercase;
+            background: #1a1a1a;
+        }
+        
+        .community-icon {
+            width: 20px;
+            height: 20px;
+            background: #c4ba0a;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+        
+        .create-post {
+            padding: 16px;
+            border-bottom: 1px solid #333;
+            background: #1a1a1a;
+        }
+        
+        .create-post-text {
+            background: #c4ba0a;
+            border: none;
+            border-radius: 3px;
+            padding: 10px 16px;
+            color: #fff;
+            cursor: pointer;
+            font-weight: bold;
+            text-transform: uppercase;
+            width: 100%;
+            text-align: center;
+            transition: background 0.2s;
+        }
+        
+        .create-post-text:hover {
+            background: #cc0000;
+        }
+        
+        .no-posts {
+            padding: 40px;
+            text-align: center;
+            color: #888;
+            font-size: 18px;
+        }
+        
+        .post-form {
+            padding: 16px;
+        }
+        
+        .post-form input, .post-form textarea, .post-form select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            background: #1a1a1a;
+            border: 1px solid #333;
+            color: #e0e0e0;
+            font-family: inherit;
+            border-radius: 3px;
+        }
+        
+        .post-form textarea {
+            min-height: 150px;
+        }
+        
+        .post-form button {
+            background: #c4ba0a;
+            color: #fff;
+            border: none;
+            padding: 10px 16px;
+            cursor: pointer;
+            font-weight: bold;
+            text-transform: uppercase;
+            border-radius: 3px;
+            transition: background 0.2s;
+        }
+        
+        .post-form button:hover {
+            background: #cc0000;
+        }
+        
+        .post-form a {
+            color: #888;
+            text-decoration: none;
+            margin-left: 10px;
+            transition: color 0.2s;
+        }
+        
+        .post-form a:hover {
+            color: #c4ba0a;
+            text-decoration: underline;
+        }
+        
+        .icon-block {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 100px;
+            height: 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .icon-link {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            filter: invert(100%);
+            transition: transform 0.2s;
+        }
+        
+        .icon-link:hover {
+            transform: scale(1.1);
+            filter: invert(50%) sepia(100%) saturate(10000%) hue-rotate(0deg);
+        }
+        
+        .file-upload {
+            margin-bottom: 10px;
+        }
+        
+        .file-upload-label {
+            display: block;
+            padding: 12px;
+            background: #1a1a1a;
+            border: 2px dashed #333;
+            text-align: center;
+            cursor: pointer;
+            margin-bottom: 10px;
+            border-radius: 3px;
+            transition: all 0.2s;
+        }
+        
+        .file-upload-label:hover {
+            background: #222;
+            border-color: #c4ba0a;
+        }
+        
+        .error-message {
+            color: #c4ba0a;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #c4ba0a;
+            background: #1a1a1a;
+            border-radius: 3px;
+        }
+
+        .soc {
+            display: flex;
+            justify-content: space-around;
+            padding: 10px;
+            background: #1a1a1a;
+        }
+        
+        .soc a {
+            color: #c4ba0a;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.2s;
+        }
+        
+        .soc a:hover {
+            color: #fff;
+            text-decoration: underline;
+        }
+        
+        .user-info {
+            color: #888;
+            font-size: 14px;
+        }
+        
+        .user-info span {
+            color: #c4ba0a;
+            font-weight: bold;
+        }
+        
+        /* GTA-style radio buttons */
+        input[type="radio"] {
+            appearance: none;
+            width: 16px;
+            height: 16px;
+            border: 2px solid #c4ba0a;
+            border-radius: 50%;
+            outline: none;
+            margin-right: 8px;
+            position: relative;
+            top: 3px;
+        }
+        
+        input[type="radio"]:checked::before {
+            content: '';
+            display: block;
+            width: 8px;
+            height: 8px;
+            background: #c4ba0a;
+            border-radius: 50%;
+            position: absolute;
+            top: 2px;
+            left: 2px;
+        }
+        
+        /* GTA-style checkboxes */
+        input[type="checkbox"] {
+            appearance: none;
+            width: 16px;
+            height: 16px;
+            border: 2px solid #c4ba0a;
+            outline: none;
+            margin-right: 8px;
+            position: relative;
+            top: 3px;
+        }
+        
+        input[type="checkbox"]:checked::before {
+            content: '✓';
+            display: block;
+            color: #c4ba0a;
+            position: absolute;
+            top: -3px;
+            left: 2px;
+        }
+        
+        /* Scrollbar styling */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #1a1a1a;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #c4ba0a;
+            border-radius: 5px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #cc0000;
+        }
+        
+        /* Mobile responsiveness */
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                padding: 10px;
+            }
+            
+            .main-content, .sidebar {
+                width: 100%;
+            }
+            
+            .sort-options {
+                flex-wrap: wrap;
+            }
+            
+            .sort-btn {
+                margin-bottom: 5px;
+            }
+            
+            .post {
+                flex-direction: column;
+            }
+            
+            .vote {
+                flex-direction: row;
+                justify-content: flex-start;
+                margin-bottom: 10px;
+            }
+            
+            .vote-btn {
+                margin: 0 10px;
+            }
+        }
+
+        .logo {
+            width: 300px;
+            height: 100px;
+        }
+
+        .logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="index.php" class="logo"><img src="images/GTAWEB.png" alt=""></a>
+        <div class="user-info">User: <span id="current-user_name">GTA8109</span></div>
+    </header>
+    <div class="icon-block">
+        <a href="https://x.com/gtathread" class="icon-link" style="background-image: url('twitter_icon.png');"></a>
+        <a href="https://t.me/gtathread" class="icon-link" style="background-image: url('telegram_icon.png');"></a>
+    </div>
+    
+    <div class="container">
+        <div class="main-content">
+            <div class="current-community">
+                <div class="community-icon"></div>
+                <span id="current-community-name">G/Los Santos</span>
+            </div>
+            
+            <div class="sort-options">
+                <button class="sort-btn active">Hot</button>
+                <button class="sort-btn">New</button>
+                <button class="sort-btn">Top</button>
+                <button class="sort-btn" id="create-post-btn">Create Post</button>
+            </div>
+            
+                            <div id="posts-container">
+                                                                        <div class="post">
+                                <div class="vote">
+                                    <form method="POST" action="index.php?community=Los+Santos">
+                                        <input type="hidden" name="post_id" value="1">
+                                        <button type="submit" name="vote_post" value="up" class="vote-btn">▲</button>
+                                        <div class="vote-count">0</div>
+                                        <button type="submit" name="vote_post" value="down" class="vote-btn">▼</button>
+                                    </form>
+                                </div>
+                                <div class="post-content">
+                                    <a href="index.php?community=Los+Santos&post_id=1" class="post-title">GTA</a>
+                                    <div class="post-meta">Posted by GTA5256 • 29m ago • 0 comments</div>
+                                                                                                                <div class="post-text">LOL</div>
+                                                                    </div>
+                            </div>
+                                                            </div>
+                    </div>
+        
+        <div class="sidebar">
+            <div class="community-card">
+                <div class="community-header">Locations</div>
+                <div class="community-list">
+                                            <a href="index.php?community=LOS+SANTOS">G/LOS SANTOS</a>
+                                            <a href="index.php?community=san+andreas">G/san andreas</a>
+                                            <a href="index.php?community=trenches">G/trenches</a>
+                                            <a href="index.php?community=vice+city">G/vice city</a>
+                                    </div>
+            </div>
+            
+            <div class="community-card">
+                <div class="community-header">About GTAThread</div>
+                <div class="community-list">
+                    <p style="font-size: 13px; color: #888; margin: 0;">GTA it.</p>
+                </div>
+                <div class="soc">
+                    <a href="https://x.com/GTAThread">X.com</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Handle create post button
+        document.getElementById('create-post-btn').addEventListener('click', function() {
+            window.location.href = 'index.php?community=Los+Santos&create_post=1';
+        });
+        
+        // Handle reply buttons
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('reply-btn')) {
+                e.preventDefault();
+                const commentId = e.target.dataset.commentId;
+                const form = document.createElement('form');
+                form.method = 'POST';
+                form.action = 'index.php?community=Los+Santos&post_id=';
+                form.innerHTML = `
+                    <input type="hidden" name="post_id" value="">
+                    <input type="hidden" name="parent_id" value="${commentId}">
+                    <textarea class="comment-textarea" name="comment_content" placeholder="Write your reply..." required style="margin-top: 10px;"></textarea>
+                    <button type="submit" name="add_comment" class="comment-submit">Reply</button>
+                `;
+                e.target.parentElement.parentElement.appendChild(form);
+                e.target.style.display = 'none';
+            }
+        });
+        
+        // Show selected filename for image upload
+        document.getElementById('post_image').addEventListener('change', function(e) {
+            const label = document.querySelector('.file-upload-label');
+            if (this.files.length > 0) {
+                label.textContent = this.files[0].name;
+                label.style.borderColor = '#c4ba0a';
+            } else {
+                label.textContent = 'Upload Image (Optional, max 5MB)';
+                label.style.borderColor = '#333';
+            }
+        });
+        
+        // Add GTA-style radio effect
+        document.querySelectorAll('.sort-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.sort-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+    </script>
+
+</body></html>
